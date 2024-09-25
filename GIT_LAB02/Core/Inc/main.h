@@ -59,7 +59,19 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+#define SEG0 	GPIO_PIN_0
+#define SEG1 	GPIO_PIN_1
+#define SEG2 	GPIO_PIN_2
+#define SEG3 	GPIO_PIN_3
+#define SEG4 	GPIO_PIN_4
+#define SEG5 	GPIO_PIN_5
+#define SEG6 	GPIO_PIN_6
+#define EN0  	GPIO_PIN_6
+#define EN1  	GPIO_PIN_7
+#define EN2  	GPIO_PIN_8
+#define EN3  	GPIO_PIN_9
 #define LED_RED GPIO_PIN_5
+#define DOT 	GPIO_PIN_4
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
