@@ -8,23 +8,55 @@
 #include "Software_timer.h"
 
 
-int timer_flag[10];
-int timer_counter[10];
-int TIMER_CYCLE = 10;
+int TICK = 10;
 
-void setTimer(int index, int counter){
-	timer_flag[index] = 0;
-	timer_counter[index] = counter / TIMER_CYCLE;
+//use run time a clock
+int timer_flag0 = 0;
+int timer_counter0 = 0;
+
+//use control 7-SEG
+int timer_flag1 = 0;
+int timer_counter1 = 0;
+
+//use control LED_RED and DOT
+int timer_flag2 = 0;
+int timer_counter2 = 0;
+
+void setTimer0(int duration){
+	timer_flag0 = 0;
+	timer_counter0 = duration / TICK;
+}
+
+void setTimer1(int duration){
+	timer_flag1 = 0;
+	timer_counter1 = duration / TICK;
+}
+
+void setTimer2(int duration){
+	timer_flag2 = 0;
+	timer_counter2 = duration / TICK;
 }
 
 void timerRun(){
-	for(int i=0; i < 10; i++){
-		if(timer_counter[i] > 0){
-			timer_counter[i]--;
-			if(timer_counter <= 0){
-				timer_flag[i] = 1;
+		if(timer_counter0 > 0){
+			timer_counter0--;
+		if(timer_counter0 <= 0){
+			timer_flag0 = 1;
 			}
 		}
-	}
+
+		if(timer_counter1 > 0){
+			timer_counter1--;
+		if(timer_counter1 <= 0){
+			timer_flag1 = 1;
+			}
+		}
+
+		if(timer_counter2 > 0){
+			timer_counter2--;
+		if(timer_counter2 <= 0){
+			timer_flag2 = 1;
+			}
+		}
 }
 
