@@ -18,7 +18,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "Software_timer.h"
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -57,6 +56,23 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int timer_flag = 0;
+int timer_counter = 0;
+int TIMER_CYCLE = 10;
+
+void setTimer0(int duration){
+	timer_flag = 0;
+	timer_counter = duration / TIMER_CYCLE;
+}
+
+void timerRun(){
+	if(timer_counter > 0){
+		timer_counter--;
+		if(timer_counter <= 0){
+			timer_flag = 1;
+		}
+	}
+}
 
 /* USER CODE END 0 */
 
@@ -95,19 +111,42 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int counter_led_red = 100;
+  setTimer0(1000);
   while (1)
   {
     /* USER CODE END WHILE */
-	  counter_led_red--;
-	  if(counter_led_red <= 0){
-		  counter_led_red = 100;
+	  if(timer_flag == 1)
+	  {
 		  HAL_GPIO_TogglePin(GPIOA, LED_RED);
+		  setTimer0(2000);
 	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
+
+/*
+1. if in line 121 of the code above is miss, what happens after that and why?
+	Because at first we initial timer1_counter=0
+	So in function timeRun(), condition "timer1_counter > 0" always false.
+	So timer1_flag always equal to 0. Therefore function HAL_GPIO_TogglePin in While(1) cant'n excute.
+
+	Because the initial state of LED-RED-PIN is 0, so LED-RED is always "turn on".
+
+2. if in line 121 of the code above is changed to setTimer0(1),
+what happens after that and why?
+	in function setTimer1(), timer1_counter = duration/TIMER_CYCLE = 1/10 = 0
+	so this case is similar with case 1: LED-RED is always "turn on".
+
+3. if in line 121 of the code above is changed to setTimer0(10),
+what is changed compared to 2 first questions and why?
+
+	The LED-RED will blink every second.
+	because, in function setTimer1(), timer1_counter = duration/TIMER_CYCLE = 10/10 = 1
+	So in function timeRun(), condition "timer1_counter > 0" is true.
+	So timer1_flag can update into 1.
+	Therefore function HAL_GPIO_TogglePin in While(1) can excute every second.
+*/
 
 /**
   * @brief System Clock Configuration
