@@ -18,12 +18,16 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "Software_timer.h"
 #include "main.h"
+#include "control_clock.h"
+#include "control_led7SEG.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Software_timer.h"
+#include "control_led_matrix.h"
+#include "clock.h"
+#include "global.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,16 +99,44 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int counter_led_red = 100;
+  setTimer0(1000);
+  setTimer1(1000);
+  setTimer2(1000);
+  setTimer3(1000);
+  setTimer4(1000);
   while (1)
   {
-    /* USER CODE END WHILE */
-	  counter_led_red--;
-	  if(counter_led_red <= 0){
-		  counter_led_red = 100;
+	  if(timer_flag2 == 1){
 		  HAL_GPIO_TogglePin(GPIOA, LED_RED);
+		  HAL_GPIO_TogglePin(GPIOA, DOT);
+		  setTimer2(1000);
 	  }
+	  if(timer_flag0 == 1){
+		  clock();
+		  updateClockBuffer();
+		  setTimer0(1000);
+	  }
+
+	  if(timer_flag1 == 1){
+		  update7SEG(index_led++);
+		  if(index_led == MAX_LED) index_led = 0;
+		  setTimer1(250);
+	  }
+
+	  if(timer_flag3 == 1){
+		  updateLedMatrix(index_led_matrix++);
+		  if(index_led_matrix == MAX_LED_MATRIX) index_led_matrix = 0;
+		  setTimer3(100);
+	  }
+
+	  if(timer_flag4 == 1){
+		  updateMatrixbuffer();
+		  setTimer4(1000);
+		}
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
@@ -196,24 +228,32 @@ static void MX_TIM2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
+	/* GPIO Ports Clock Enable */
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+		__HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin : LED_RED */
-  GPIO_InitStruct.Pin = LED_RED;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin = LED_RED|EN0|EN1|EN2|EN3|DOT|
+			ENM0|ENM1|ENM2|ENM3|ENM4|ENM5|ENM6|ENM7;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+	GPIO_InitStruct.Pin = SEG0|SEG1|SEG2|SEG3|SEG4|SEG5|SEG6|
+			ROW0|ROW1|ROW2|ROW3|ROW4|ROW5|ROW6|ROW7;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
-	timerRun();
-}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+ {
+		timerRun();
+ }
 /* USER CODE END 4 */
 
 /**
