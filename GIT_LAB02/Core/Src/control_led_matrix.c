@@ -8,7 +8,7 @@
 #include "control_led_matrix.h"
 
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] =  {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+uint8_t matrix_buffer[8] =  {0x18,0x24,0x5a,0xa5,0x5a,0xa5,0x42,0x81};
 void displayLedMatrix(int index){
     HAL_GPIO_WritePin(GPIOA, ENM0, (index & 1));
     index = index >> 1;
