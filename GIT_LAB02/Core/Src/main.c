@@ -126,7 +126,7 @@ int main(void)
 	  if(timer_flag3 == 1){
 		  updateLedMatrix(index_led_matrix++);
 		  if(index_led_matrix == MAX_LED_MATRIX) index_led_matrix = 0;
-		  setTimer3(100);
+		  setTimer3(1000);
 	  }
 
 	  if(timer_flag4 == 1){
