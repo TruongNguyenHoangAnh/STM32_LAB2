@@ -669,7 +669,7 @@ void Display7SEG(int counter){
  8000584:	40010c00 	.word	0x40010c00
 
 08000588 <update7SEG>:
-int led_buffer [4] = {3, 4, 5, 8};
+int led_buffer [4] = {1, 5, 0, 9};
 int hour;
 int minutes;
 int second;
@@ -978,122 +978,123 @@ int main(void)
   setTimer0(1000);
  8000788:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  800078c:	f7ff fcde 	bl	800014c <setTimer0>
-  setTimer1(1000);
- 8000790:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
- 8000794:	f7ff fcf4 	bl	8000180 <setTimer1>
+  setTimer1(250);
+ 8000790:	20fa      	movs	r0, #250	; 0xfa
+ 8000792:	f7ff fcf5 	bl	8000180 <setTimer1>
   setTimer2(1000);
- 8000798:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
- 800079c:	f7ff fd0a 	bl	80001b4 <setTimer2>
+ 8000796:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+ 800079a:	f7ff fd0b 	bl	80001b4 <setTimer2>
   while (1)
   {
 	  if(timer_flag2 == 1){
- 80007a0:	4b2e      	ldr	r3, [pc, #184]	; (800085c <main+0x100>)
- 80007a2:	681b      	ldr	r3, [r3, #0]
- 80007a4:	2b01      	cmp	r3, #1
- 80007a6:	d10b      	bne.n	80007c0 <main+0x64>
+ 800079e:	4b2f      	ldr	r3, [pc, #188]	; (800085c <main+0x100>)
+ 80007a0:	681b      	ldr	r3, [r3, #0]
+ 80007a2:	2b01      	cmp	r3, #1
+ 80007a4:	d10b      	bne.n	80007be <main+0x62>
 		  HAL_GPIO_TogglePin(GPIOA, LED_RED);
- 80007a8:	2120      	movs	r1, #32
- 80007aa:	482d      	ldr	r0, [pc, #180]	; (8000860 <main+0x104>)
- 80007ac:	f000 fcf8 	bl	80011a0 <HAL_GPIO_TogglePin>
+ 80007a6:	2120      	movs	r1, #32
+ 80007a8:	482d      	ldr	r0, [pc, #180]	; (8000860 <main+0x104>)
+ 80007aa:	f000 fcf9 	bl	80011a0 <HAL_GPIO_TogglePin>
 		  HAL_GPIO_TogglePin(GPIOA, DOT);
- 80007b0:	2110      	movs	r1, #16
- 80007b2:	482b      	ldr	r0, [pc, #172]	; (8000860 <main+0x104>)
- 80007b4:	f000 fcf4 	bl	80011a0 <HAL_GPIO_TogglePin>
+ 80007ae:	2110      	movs	r1, #16
+ 80007b0:	482b      	ldr	r0, [pc, #172]	; (8000860 <main+0x104>)
+ 80007b2:	f000 fcf5 	bl	80011a0 <HAL_GPIO_TogglePin>
 		  setTimer2(1000);
- 80007b8:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
- 80007bc:	f7ff fcfa 	bl	80001b4 <setTimer2>
+ 80007b6:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+ 80007ba:	f7ff fcfb 	bl	80001b4 <setTimer2>
 	  }
 	  if(timer_flag0 == 1){
- 80007c0:	4b28      	ldr	r3, [pc, #160]	; (8000864 <main+0x108>)
- 80007c2:	681b      	ldr	r3, [r3, #0]
- 80007c4:	2b01      	cmp	r3, #1
- 80007c6:	d129      	bne.n	800081c <main+0xc0>
+ 80007be:	4b29      	ldr	r3, [pc, #164]	; (8000864 <main+0x108>)
+ 80007c0:	681b      	ldr	r3, [r3, #0]
+ 80007c2:	2b01      	cmp	r3, #1
+ 80007c4:	d129      	bne.n	800081a <main+0xbe>
 
 	  second ++;
- 80007c8:	4b23      	ldr	r3, [pc, #140]	; (8000858 <main+0xfc>)
- 80007ca:	681b      	ldr	r3, [r3, #0]
- 80007cc:	3301      	adds	r3, #1
- 80007ce:	4a22      	ldr	r2, [pc, #136]	; (8000858 <main+0xfc>)
- 80007d0:	6013      	str	r3, [r2, #0]
+ 80007c6:	4b24      	ldr	r3, [pc, #144]	; (8000858 <main+0xfc>)
+ 80007c8:	681b      	ldr	r3, [r3, #0]
+ 80007ca:	3301      	adds	r3, #1
+ 80007cc:	4a22      	ldr	r2, [pc, #136]	; (8000858 <main+0xfc>)
+ 80007ce:	6013      	str	r3, [r2, #0]
 	  if (second >= 60)
- 80007d2:	4b21      	ldr	r3, [pc, #132]	; (8000858 <main+0xfc>)
- 80007d4:	681b      	ldr	r3, [r3, #0]
- 80007d6:	2b3b      	cmp	r3, #59	; 0x3b
- 80007d8:	dd07      	ble.n	80007ea <main+0x8e>
+ 80007d0:	4b21      	ldr	r3, [pc, #132]	; (8000858 <main+0xfc>)
+ 80007d2:	681b      	ldr	r3, [r3, #0]
+ 80007d4:	2b3b      	cmp	r3, #59	; 0x3b
+ 80007d6:	dd07      	ble.n	80007e8 <main+0x8c>
 	  {
 		  second = 0;
- 80007da:	4b1f      	ldr	r3, [pc, #124]	; (8000858 <main+0xfc>)
- 80007dc:	2200      	movs	r2, #0
- 80007de:	601a      	str	r2, [r3, #0]
+ 80007d8:	4b1f      	ldr	r3, [pc, #124]	; (8000858 <main+0xfc>)
+ 80007da:	2200      	movs	r2, #0
+ 80007dc:	601a      	str	r2, [r3, #0]
 	  	  minutes++;
- 80007e0:	4b1c      	ldr	r3, [pc, #112]	; (8000854 <main+0xf8>)
- 80007e2:	681b      	ldr	r3, [r3, #0]
- 80007e4:	3301      	adds	r3, #1
- 80007e6:	4a1b      	ldr	r2, [pc, #108]	; (8000854 <main+0xf8>)
- 80007e8:	6013      	str	r3, [r2, #0]
+ 80007de:	4b1d      	ldr	r3, [pc, #116]	; (8000854 <main+0xf8>)
+ 80007e0:	681b      	ldr	r3, [r3, #0]
+ 80007e2:	3301      	adds	r3, #1
+ 80007e4:	4a1b      	ldr	r2, [pc, #108]	; (8000854 <main+0xf8>)
+ 80007e6:	6013      	str	r3, [r2, #0]
 	  }
 	  if(minutes >= 60)
- 80007ea:	4b1a      	ldr	r3, [pc, #104]	; (8000854 <main+0xf8>)
- 80007ec:	681b      	ldr	r3, [r3, #0]
- 80007ee:	2b3b      	cmp	r3, #59	; 0x3b
- 80007f0:	dd07      	ble.n	8000802 <main+0xa6>
+ 80007e8:	4b1a      	ldr	r3, [pc, #104]	; (8000854 <main+0xf8>)
+ 80007ea:	681b      	ldr	r3, [r3, #0]
+ 80007ec:	2b3b      	cmp	r3, #59	; 0x3b
+ 80007ee:	dd07      	ble.n	8000800 <main+0xa4>
 	  {
 		  minutes = 0;
- 80007f2:	4b18      	ldr	r3, [pc, #96]	; (8000854 <main+0xf8>)
- 80007f4:	2200      	movs	r2, #0
- 80007f6:	601a      	str	r2, [r3, #0]
+ 80007f0:	4b18      	ldr	r3, [pc, #96]	; (8000854 <main+0xf8>)
+ 80007f2:	2200      	movs	r2, #0
+ 80007f4:	601a      	str	r2, [r3, #0]
 	  	  hour++;
- 80007f8:	4b15      	ldr	r3, [pc, #84]	; (8000850 <main+0xf4>)
- 80007fa:	681b      	ldr	r3, [r3, #0]
- 80007fc:	3301      	adds	r3, #1
- 80007fe:	4a14      	ldr	r2, [pc, #80]	; (8000850 <main+0xf4>)
- 8000800:	6013      	str	r3, [r2, #0]
+ 80007f6:	4b16      	ldr	r3, [pc, #88]	; (8000850 <main+0xf4>)
+ 80007f8:	681b      	ldr	r3, [r3, #0]
+ 80007fa:	3301      	adds	r3, #1
+ 80007fc:	4a14      	ldr	r2, [pc, #80]	; (8000850 <main+0xf4>)
+ 80007fe:	6013      	str	r3, [r2, #0]
 	  }
 	  if(hour >= 24)
- 8000802:	4b13      	ldr	r3, [pc, #76]	; (8000850 <main+0xf4>)
- 8000804:	681b      	ldr	r3, [r3, #0]
- 8000806:	2b17      	cmp	r3, #23
- 8000808:	dd02      	ble.n	8000810 <main+0xb4>
+ 8000800:	4b13      	ldr	r3, [pc, #76]	; (8000850 <main+0xf4>)
+ 8000802:	681b      	ldr	r3, [r3, #0]
+ 8000804:	2b17      	cmp	r3, #23
+ 8000806:	dd02      	ble.n	800080e <main+0xb2>
 	  {
 		  hour = 0;
- 800080a:	4b11      	ldr	r3, [pc, #68]	; (8000850 <main+0xf4>)
- 800080c:	2200      	movs	r2, #0
- 800080e:	601a      	str	r2, [r3, #0]
+ 8000808:	4b11      	ldr	r3, [pc, #68]	; (8000850 <main+0xf4>)
+ 800080a:	2200      	movs	r2, #0
+ 800080c:	601a      	str	r2, [r3, #0]
 	  }
 	  updateClockBuffer();
- 8000810:	f7ff ff46 	bl	80006a0 <updateClockBuffer>
+ 800080e:	f7ff ff47 	bl	80006a0 <updateClockBuffer>
 	  setTimer0(1000);
- 8000814:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
- 8000818:	f7ff fc98 	bl	800014c <setTimer0>
+ 8000812:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+ 8000816:	f7ff fc99 	bl	800014c <setTimer0>
 	  }
 
 	  if(timer_flag1 == 1){
- 800081c:	4b12      	ldr	r3, [pc, #72]	; (8000868 <main+0x10c>)
- 800081e:	681b      	ldr	r3, [r3, #0]
- 8000820:	2b01      	cmp	r3, #1
- 8000822:	d1bd      	bne.n	80007a0 <main+0x44>
+ 800081a:	4b13      	ldr	r3, [pc, #76]	; (8000868 <main+0x10c>)
+ 800081c:	681b      	ldr	r3, [r3, #0]
+ 800081e:	2b01      	cmp	r3, #1
+ 8000820:	d1bd      	bne.n	800079e <main+0x42>
 		    update7SEG(index_led++);
- 8000824:	4b11      	ldr	r3, [pc, #68]	; (800086c <main+0x110>)
- 8000826:	681b      	ldr	r3, [r3, #0]
- 8000828:	1c5a      	adds	r2, r3, #1
- 800082a:	4910      	ldr	r1, [pc, #64]	; (800086c <main+0x110>)
- 800082c:	600a      	str	r2, [r1, #0]
- 800082e:	4618      	mov	r0, r3
- 8000830:	f7ff feaa 	bl	8000588 <update7SEG>
+ 8000822:	4b12      	ldr	r3, [pc, #72]	; (800086c <main+0x110>)
+ 8000824:	681b      	ldr	r3, [r3, #0]
+ 8000826:	1c5a      	adds	r2, r3, #1
+ 8000828:	4910      	ldr	r1, [pc, #64]	; (800086c <main+0x110>)
+ 800082a:	600a      	str	r2, [r1, #0]
+ 800082c:	4618      	mov	r0, r3
+ 800082e:	f7ff feab 	bl	8000588 <update7SEG>
 		    if(index_led == MAX_LED) index_led = 0;
- 8000834:	4b0d      	ldr	r3, [pc, #52]	; (800086c <main+0x110>)
- 8000836:	681b      	ldr	r3, [r3, #0]
- 8000838:	2204      	movs	r2, #4
- 800083a:	4293      	cmp	r3, r2
- 800083c:	d102      	bne.n	8000844 <main+0xe8>
- 800083e:	4b0b      	ldr	r3, [pc, #44]	; (800086c <main+0x110>)
- 8000840:	2200      	movs	r2, #0
- 8000842:	601a      	str	r2, [r3, #0]
+ 8000832:	4b0e      	ldr	r3, [pc, #56]	; (800086c <main+0x110>)
+ 8000834:	681b      	ldr	r3, [r3, #0]
+ 8000836:	2204      	movs	r2, #4
+ 8000838:	4293      	cmp	r3, r2
+ 800083a:	d102      	bne.n	8000842 <main+0xe6>
+ 800083c:	4b0b      	ldr	r3, [pc, #44]	; (800086c <main+0x110>)
+ 800083e:	2200      	movs	r2, #0
+ 8000840:	601a      	str	r2, [r3, #0]
 		    setTimer1(250);
- 8000844:	20fa      	movs	r0, #250	; 0xfa
- 8000846:	f7ff fc9b 	bl	8000180 <setTimer1>
+ 8000842:	20fa      	movs	r0, #250	; 0xfa
+ 8000844:	f7ff fc9c 	bl	8000180 <setTimer1>
 	  if(timer_flag2 == 1){
- 800084a:	e7a9      	b.n	80007a0 <main+0x44>
+ 8000848:	e7a9      	b.n	800079e <main+0x42>
+ 800084a:	bf00      	nop
  800084c:	20000060 	.word	0x20000060
  8000850:	2000005c 	.word	0x2000005c
  8000854:	200000a8 	.word	0x200000a8

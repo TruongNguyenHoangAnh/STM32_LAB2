@@ -153,7 +153,7 @@ void Display7SEG(int counter){
 
 const int MAX_LED = 4;
 int index_led = 0;
-int led_buffer [4] = {3, 4, 5, 8};
+int led_buffer [4] = {1, 5, 0, 9};
 int hour;
 int minutes;
 int second;
@@ -254,7 +254,7 @@ int main(void)
   minutes = 8;
   second = 50;
   setTimer0(1000);
-  setTimer1(1000);
+  setTimer1(250);
   setTimer2(1000);
   while (1)
   {
